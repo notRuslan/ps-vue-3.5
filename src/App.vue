@@ -4,9 +4,11 @@ const btnStyle = 'button';
 </script>
 
 <template>
- <Button :class=btnStyle>
-   Начать игру
- </Button>
+  <main>
+    <Button :class=btnStyle>
+      Начать игру
+    </Button>
+  </main>
 </template>
 
 <style scoped>

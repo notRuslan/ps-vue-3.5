@@ -5,7 +5,7 @@
   -moz-osx-font-smoothing: grayscale;
   --font: "Roboto", sans-serif;
   --color-secondary: #ffffff;
-  --color-fird: #008BFE
+  --color-third: #008BFE
 }
 
 body {
@@ -15,25 +15,9 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /*background-color: var(--color-bg);*/
   display: grid;
   place-items: center;
   min-height: 100vh;
 }
 
-.button{
-  color: var(--color-secondary);
-  background-color: var(--color-fird);
-  font-size: 24px;
-  line-height: 150%;
-  border-radius: 100px;
-  padding: 16px 10px;
-  width: 335px;
-  display: block;
-  text-align: center;
-  /*height: 68px;*/
-}
 
-.button:hover {
-  background: #6C38CC;
-}
