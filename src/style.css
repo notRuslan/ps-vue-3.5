@@ -5,7 +5,8 @@
   -moz-osx-font-smoothing: grayscale;
   --font: "Roboto", sans-serif;
   --color-secondary: #ffffff;
-  --color-third: #008BFE
+  --color-third: #008BFE;
+  --color-third--invert: #6C38CC;
 }
 
 body {

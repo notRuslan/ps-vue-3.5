@@ -23,6 +23,6 @@
 }
 
 .button:hover {
-  background: #6C38CC;
+  background: var(--color-third--invert);
 }
 </style>
