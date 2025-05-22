@@ -1,9 +1,14 @@
 <script setup>
-
+import Button from "./components/Button.vue";
+const btnStyle = 'button';
 </script>
 
 <template>
- <div>Current date: {{new Date().toLocaleDateString() }}</div>
+  <main>
+    <Button :class=btnStyle>
+      Начать игру
+    </Button>
+  </main>
 </template>
 
 <style scoped>

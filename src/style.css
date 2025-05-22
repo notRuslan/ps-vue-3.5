@@ -3,4 +3,22 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --font: "Roboto", sans-serif;
+  --color-secondary: #ffffff;
+  --color-third: #008BFE;
+  --color-third--invert: #6C38CC;
 }
+
+body {
+  font-family: var(--font);
+  color: var(--color-secondary);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+}
+
+
