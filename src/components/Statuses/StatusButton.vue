@@ -3,8 +3,10 @@
 </script>
 
 <template>
+
+<button>
   <slot/>
-<button />
+</button>
 
 </template>
 
