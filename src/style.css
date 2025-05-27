@@ -4,13 +4,22 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   --font: "Roboto", sans-serif;
+  --color-primary: #000000;
   --color-secondary: #ffffff;
   --color-third: #008BFE;
   --color-third--invert: #6C38CC;
+  --color-score: #008BFE;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
 body {
-  font-family: var(--font);
+  font-family: var(--font), serif;
   color: var(--color-secondary);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -19,6 +28,7 @@ body {
   display: grid;
   place-items: center;
   min-height: 100vh;
+  background: #f0f4f8;
 }
 
 
