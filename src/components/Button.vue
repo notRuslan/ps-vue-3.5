@@ -1,9 +1,13 @@
 <script setup>
+const emit = defineEmits(['startGame']);
 
+function startGame(){
+  emit('startGame');
+}
 </script>
 
 <template>
-<button class="button">
+<button class="button" @click="startGame()">
   <slot />
 </button>
 </template>
