@@ -3,11 +3,21 @@ import Button from "./components/Button.vue";
 import ScoreDisplay from "./components/ScoreDisplay.vue";
 import HeardIcon from "./icons/HeardIcon.vue";
 import Card from "./components/Card.vue";
+import {ref} from "vue";
 
 const btnStyle = 'button';
 
-let score = 0;
+let score = ref(0);
+let card = ref({
+  word: 'pollination',
+  translation: 'опыление',
+  state: 'closed',
+  status: 'pending',
+});
 
+let isStartedGame = false;
+
+// card.value.word = 'HHH';
 </script>
 
 <template>
@@ -20,11 +30,11 @@ let score = 0;
     </nav>
   </header>
   <main class="main container">
-    <Button :class=btnStyle>
-      Начать игру
+    <Button buttonText = 'Начать игру'  >
     </Button>
 
-    <Card />
+    <Card v-bind="card">
+    </Card>
   </main>
 </template>
 

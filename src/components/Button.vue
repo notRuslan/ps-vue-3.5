@@ -1,10 +1,18 @@
 <script setup>
 
+const props = defineProps({
+  buttonText: String,
+})
+const emit = defineEmits(['startGame']);
+
+function startGame(){
+  emit('startGame');
+}
 </script>
 
 <template>
-<button class="button">
-  <slot />
+<button class="button" @click="startGame()">
+  {{ buttonText }}
 </button>
 </template>
 
