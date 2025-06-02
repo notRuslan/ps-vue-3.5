@@ -4,12 +4,14 @@
 
 <template>
 
-<button>
+<button class="status-button">
   <slot/>
 </button>
 
 </template>
 
 <style scoped>
-
+.status-button{
+  border: none;
+}
 </style>

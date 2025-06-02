@@ -31,4 +31,11 @@ body {
   background: #f0f4f8;
 }
 
+.status-icon-sm{
+  --status-icon-size: 20px;
+}
+
+.status-icon-lg{
+  --status-icon-size: 40px;
+}
 

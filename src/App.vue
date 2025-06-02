@@ -3,7 +3,7 @@ import Button from "./components/Button.vue";
 import ScoreDisplay from "./components/ScoreDisplay.vue";
 import HeardIcon from "./icons/HeardIcon.vue";
 import Card from "./components/Card.vue";
-import {ref} from "vue";
+import {computed, ref} from "vue";
 
 const btnStyle = 'button';
 
@@ -14,6 +14,35 @@ let card = ref({
   state: 'closed',
   status: 'pending',
 });
+
+let dataModified = computed(() => {
+  return[
+    {
+      word: 'pollination',
+      translation: 'опыление',
+      state: 'closed',
+      status: 'pending',
+    },
+    {
+      word: 'pollination',
+      translation: 'опыление',
+      state: 'opened',
+      status: 'pending',
+    },
+    {
+      word: 'pollination',
+      translation: 'опыление',
+      state: 'opened',
+      status: 'success',
+    },
+    {
+      word: 'pollination',
+      translation: 'опыление',
+      state: 'opened',
+      status: 'fail',
+    },
+  ];
+  });
 
 let isStartedGame = false;
 
@@ -33,7 +62,8 @@ let isStartedGame = false;
     <Button buttonText = 'Начать игру'  >
     </Button>
 
-    <Card v-bind="card">
+    <Card v-for="(data, index) in dataModified" v-bind="data" :card-number="index">
+
     </Card>
   </main>
 </template>

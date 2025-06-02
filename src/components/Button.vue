@@ -18,7 +18,6 @@ function startGame(){
 
 <style scoped>
 .button{
-  border: none;
   color: var(--color-secondary);
   background-color: var(--color-third);
   font-size: 24px;
@@ -28,6 +27,7 @@ function startGame(){
   width: 335px;
   display: block;
   text-align: center;
+  border: none;
 }
 
 .button:hover {

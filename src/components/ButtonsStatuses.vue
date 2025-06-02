@@ -16,13 +16,18 @@ function clickOk(){
 </script>
 
 <template>
- <div>
+ <div class="buttons-statuses">
    <StatusButton @click="clickNotOk()"><SmallNotOKIcon /></StatusButton>
-   <StatusButton  @click="clickOk()"><SmallOKIcon/></StatusButton>
+   <StatusButton @click="clickOk()"><SmallOKIcon/></StatusButton>
  </div>
 
 </template>
 
 <style scoped>
-
+.buttons-statuses{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+}
 </style>

@@ -1,6 +1,8 @@
 <script setup>
 
 import ButtonsStatuses from "./ButtonsStatuses.vue";
+import SmallOKIcon from "../icons/SmallOKIcon.vue";
+import SmallNotOKIcon from "../icons/SmallNotOKIcon.vue";
 
 const emit = defineEmits(['cardRotate']);
 const props = defineProps({
@@ -8,6 +10,7 @@ const props = defineProps({
   translation: String,
   state: String,
   status: String,
+  cardNumber: Number,
 });
 function rotate(){
   emit('cardRotate');
@@ -17,15 +20,22 @@ function rotate(){
 
 <template>
   <div class="card">
-    <div class="card-number">05</div>
+    <div class="card-number">{{cardNumber}}</div>
+    <div v-if="status === 'success'" class="card-status" :class="status">
+      <SmallOKIcon class="status-icon-lg" />
+    </div>
+    <div v-if="status === 'fail'" class="card-status" :class="status">
+      <SmallNotOKIcon class="status-icon-lg" />
+    </div>
     <div class="card-content">
       <div class="main-text">
-        {{word}}
-        {{translation}}
+        <div v-if="state === 'closed'" >{{ word }} : {{state}}</div>
+        <div v-else>{{translation}} : {{status}}</div>
       </div>
     </div>
-    <div class="bottom-text" @click="rotate()">перевернуть</div>
-    <div><ButtonsStatuses /></div>
+    <div v-if="state === 'opened' && status === 'pending'" class="bottom-text"><ButtonsStatuses /></div>
+    <div v-else-if="status === 'pending'" class="bottom-text" @click="rotate()">перевернуть</div>
+    <div v-if="status !== 'pending'" class="bottom-text" @click="rotate()">завершено</div>
   </div>
 </template>
 
@@ -50,6 +60,13 @@ function rotate(){
   left: 35px;
   font-size: 14px;
   font-weight: 400;
+  z-index: 2;
+}
+
+.card-status{
+  position: absolute;
+  top: 2px;
+  left: 100px;
   z-index: 2;
 }
 
