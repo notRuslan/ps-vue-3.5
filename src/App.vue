@@ -11,9 +11,11 @@ let score = ref(0);
 let card = ref({
   word: 'pollination',
   translation: 'опыление',
-  stateClosed: false,
-  statusSuccess: false,
+  state: 'closed',
+  status: 'pending',
 });
+
+let isStartedGame = false;
 
 // card.value.word = 'HHH';
 </script>
@@ -28,12 +30,10 @@ let card = ref({
     </nav>
   </header>
   <main class="main container">
-    <Button :class=btnStyle >
-      Начать игру
+    <Button buttonText = 'Начать игру'  >
     </Button>
 
     <Card v-bind="card">
-<!--      {{ word }}-->
     </Card>
   </main>
 </template>

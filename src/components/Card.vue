@@ -3,8 +3,11 @@
 import ButtonsStatuses from "./ButtonsStatuses.vue";
 
 const emit = defineEmits(['cardRotate']);
-const { word } = defineProps({
+const props = defineProps({
   word: String,
+  translation: String,
+  state: String,
+  status: String,
 });
 function rotate(){
   emit('cardRotate');
@@ -18,6 +21,7 @@ function rotate(){
     <div class="card-content">
       <div class="main-text">
         {{word}}
+        {{translation}}
       </div>
     </div>
     <div class="bottom-text" @click="rotate()">перевернуть</div>
