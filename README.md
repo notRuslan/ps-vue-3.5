@@ -30,3 +30,8 @@ npm install -D eslint-plugin-vue @vitejs/plugin-vue @vue/eslint-config-prettier 
   - state-closed | opened
   - status-success | fail | pending
 - вывести одну любую карту
+
+
+## Forth task templates and models
+- Card with all states
+- Output two cards at least
