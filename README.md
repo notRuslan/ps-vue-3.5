@@ -35,3 +35,13 @@ npm install -D eslint-plugin-vue @vitejs/plugin-vue @vue/eslint-config-prettier 
 ## Forth task templates and models
 - Card with all states
 - Output two cards at least
+
+## Fifth task Life Cycle
+API integration
+- Start local API server (http://localhost:8080/api/random-words)
+- Download data from API for cards
+- Add cards to the state
+- Display cards in the template
+
+
+

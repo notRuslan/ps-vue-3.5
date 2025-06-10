@@ -3,46 +3,46 @@ import Button from "./components/Button.vue";
 import ScoreDisplay from "./components/ScoreDisplay.vue";
 import HeardIcon from "./icons/HeardIcon.vue";
 import Card from "./components/Card.vue";
-import {computed, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 
+const API_ENDPOINT = 'http://localhost:8080/api';
 const btnStyle = 'button';
 
+
 let score = ref(0);
-let card = ref({
+/*let card = ref({
   word: 'pollination',
   translation: 'опыление',
   state: 'closed',
   status: 'pending',
-});
+});*/
+
+let data = ref([]);
+
+
+async function getCards() {
+  // eslint-disable-next-line no-undef
+  const res = await fetch(`${API_ENDPOINT}/random-words`);
+  if (res.status != 200) {
+    console.error('Error fetching data');
+  }
+  data.value = await res.json();
+}
 
 let dataModified = computed(() => {
-  return[
-    {
-      word: 'pollination',
-      translation: 'опыление',
-      state: 'closed',
-      status: 'pending',
-    },
-    {
-      word: 'pollination',
-      translation: 'опыление',
-      state: 'opened',
-      status: 'pending',
-    },
-    {
-      word: 'pollination',
-      translation: 'опыление',
-      state: 'opened',
-      status: 'success',
-    },
-    {
-      word: 'pollination',
-      translation: 'опыление',
-      state: 'opened',
-      status: 'fail',
-    },
-  ];
-  });
+  if (!data.value) {
+    return [];
+  }
+  return data.value?.map((item) => ({
+    ...item,
+    state: 'closed',
+    status: 'pending',
+  })) || []; // возвращаем пустой массив при отсутствии данных
+});
+
+onMounted(() => {
+  getCards();
+});
 
 let isStartedGame = false;
 
@@ -59,12 +59,15 @@ let isStartedGame = false;
     </nav>
   </header>
   <main class="main container">
-    <Button buttonText = 'Начать игру'  >
-    </Button>
-
-    <Card v-for="(data, index) in dataModified" v-bind="data" :card-number="index">
-
-    </Card>
+    <Button buttonText='Начать игру' @click="getCards"/>
+    <div class="card-list">
+      <Card
+          v-for="(card, index) in dataModified"
+          v-bind="card"
+          :key="`${card.word} + ${index}`"
+          :card-number="index + 1"
+      />
+    </div>
   </main>
 </template>
 
@@ -77,6 +80,7 @@ let isStartedGame = false;
 }
 
 nav {
+  color: #000;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -86,5 +90,12 @@ nav {
   color: #222222;
   font-weight: 700;
   text-transform: uppercase;
+}
+
+.card-list {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 </style>
