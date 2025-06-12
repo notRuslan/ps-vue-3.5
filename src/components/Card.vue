@@ -12,7 +12,8 @@ const props = defineProps({
   status: String,
   cardNumber: Number,
 });
-function rotate(){
+
+function rotate() {
   emit('cardRotate');
 }
 
@@ -20,20 +21,22 @@ function rotate(){
 
 <template>
   <div class="card">
-    <div class="card-number">{{cardNumber}}</div>
+    <div class="card-number">{{ cardNumber }}</div>
     <div v-if="status === 'success'" class="card-status" :class="status">
-      <SmallOKIcon class="status-icon-lg" />
+      <SmallOKIcon class="status-icon-lg"/>
     </div>
     <div v-if="status === 'fail'" class="card-status" :class="status">
-      <SmallNotOKIcon class="status-icon-lg" />
+      <SmallNotOKIcon class="status-icon-lg"/>
     </div>
     <div class="card-content">
       <div class="main-text">
-        <div v-if="state === 'closed'" >{{ word }} : {{state}}</div>
-        <div v-else>{{translation}} : {{status}}</div>
+        <div v-if="state === 'closed'">{{ word }}</div>
+        <div v-else>{{ translation }} : {{ status }}</div>
       </div>
     </div>
-    <div v-if="state === 'opened' && status === 'pending'" class="bottom-text"><ButtonsStatuses /></div>
+    <div v-if="state === 'opened' && status === 'pending'" class="bottom-text">
+      <ButtonsStatuses/>
+    </div>
     <div v-else-if="status === 'pending'" class="bottom-text" @click="rotate()">перевернуть</div>
     <div v-if="status !== 'pending'" class="bottom-text" @click="rotate()">завершено</div>
   </div>
@@ -63,7 +66,7 @@ function rotate(){
   z-index: 2;
 }
 
-.card-status{
+.card-status {
   position: absolute;
   top: 2px;
   left: 100px;
