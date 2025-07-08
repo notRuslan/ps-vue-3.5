@@ -1,30 +1,35 @@
 <script setup>
 
-import SmallOKIcon from "../icons/SmallOKIcon.vue";
-import SmallNotOKIcon from "../icons/SmallNotOKIcon.vue";
+import IconOk from "../icons/IconOk.vue";
+import IconNotOk from "../icons/IconNotOk.vue";
 import StatusButton from "./Statuses/StatusButton.vue";
 
-const emit = defineEmits(['clickNotOk', 'clickOk']);
+const emit = defineEmits(['right-answer', 'wrong-answer']);
 
-function clickNotOk(){
-  emit('clickNotOk');
+function rightAnswer() {
+  emit('right-answer');
 }
-function clickOk(){
-  emit('clickOk');
+
+function wrongAnswer() {
+  emit('wrong-answer');
 }
 
 </script>
 
 <template>
- <div class="buttons-statuses">
-   <StatusButton @click="clickNotOk()"><SmallNotOKIcon /></StatusButton>
-   <StatusButton @click="clickOk()"><SmallOKIcon/></StatusButton>
- </div>
+  <div class="buttons-statuses">
+    <StatusButton @click="wrongAnswer()">
+      <IconNotOk/>
+    </StatusButton>
+    <StatusButton @click="rightAnswer()">
+      <IconOk/>
+    </StatusButton>
+  </div>
 
 </template>
 
 <style scoped>
-.buttons-statuses{
+.buttons-statuses {
   display: flex;
   justify-content: space-between;
   align-items: center;

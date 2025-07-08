@@ -3,10 +3,9 @@ import Button from "./components/Button.vue";
 import ScoreDisplay from "./components/ScoreDisplay.vue";
 import HeardIcon from "./icons/HeardIcon.vue";
 import Card from "./components/Card.vue";
-import {computed, onMounted, ref} from "vue";
+import {onMounted, ref} from "vue";
 
 const API_ENDPOINT = 'http://localhost:8080/api';
-const btnStyle = 'button';
 
 
 let score = ref(0);
@@ -27,18 +26,15 @@ async function getCards() {
     console.error('Error fetching data');
   }
   data.value = await res.json();
-}
 
-let dataModified = computed(() => {
-  if (!data.value) {
-    return [];
-  }
-  return data.value?.map((item) => ({
+  const tempData = data.value?.map((item) => ({
     ...item,
     state: 'closed',
     status: 'pending',
-  })) || []; // возвращаем пустой массив при отсутствии данных
-});
+  }));
+
+  data.value = tempData;
+}
 
 onMounted(() => {
   getCards();
@@ -46,7 +42,20 @@ onMounted(() => {
 
 let isStartedGame = false;
 
-// card.value.word = 'HHH';
+function flipCard(index) {
+  data.value[index].state = 'opened';
+}
+
+function successAnswer(index) {
+  data.value[index].status = 'success';
+  score.value += 10;
+}
+
+function wrongAnswer(index) {
+  data.value[index].status = 'fail';
+  score.value -= 4;
+}
+
 </script>
 
 <template>
@@ -62,11 +71,15 @@ let isStartedGame = false;
     <Button buttonText='Начать игру' @click="getCards"/>
     <div class="card-list">
       <Card
-          v-for="(card, index) in dataModified"
+          v-for="(card, index) in data"
           v-bind="card"
           :key="`${card.word} + ${index}`"
           :card-number="index + 1"
-      />
+          @card-rotate="flipCard(index)"
+          @right-answer="successAnswer(index)"
+          @wrong-answer="wrongAnswer(index)"
+      >
+      </Card>
     </div>
   </main>
 </template>
