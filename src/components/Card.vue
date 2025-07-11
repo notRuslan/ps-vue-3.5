@@ -20,39 +20,46 @@ function rotate() {
 </script>
 
 <template>
-  <div
-      class="card"
-      :class="{flipped: state === 'opened'}"
-  >
+  <div class="card" :class="{flipped: state === 'opened'}">
     <div class="card-inner">
-      <div class="card-number">{{ cardNumber }}</div>
-      <div v-if="status === 'success'" class="card-status" :class="status">
-        <IconOk :size="40"/>
-      </div>
-      <div v-if="status === 'fail'" class="card-status" :class="status">
-        <IconNotOk :size="40"/>
-      </div>
-      <div class="card-content">
-        <div class="main-text">
-          <div v-if="state === 'closed'">{{ word }}</div>
-          <div v-else>{{ translation }}</div>
+      <!-- Передняя сторона -->
+      <div class="card-face card-front">
+        <div class="card-number">{{ cardNumber }}</div>
+        <div v-if="status === 'success'" class="card-status" :class="status">
+          <IconOk :size="40"/>
         </div>
+        <div v-if="status === 'fail'" class="card-status" :class="status">
+          <IconNotOk :size="40"/>
+        </div>
+        <div class="card-content">
+          <div class="main-text">{{ word }}</div>
+        </div>
+        <div v-if="status === 'pending'" class="bottom-text" @click="rotate()">
+          перевернуть
+        </div>
+        <div v-if="status !== 'pending'" class="bottom-text">завершено</div>
       </div>
-      <div
-          v-if="state === 'opened' && status === 'pending'"
-          class="bottom-text"
-      >
-        <ButtonsStatuses
-            @right-answer="() => {emit('right-answer')}"
-            @wrong-answer="() => {emit('wrong-answer')}"
-        />
+
+      <!-- Задняя сторона -->
+      <div class="card-face card-back">
+        <div class="card-number">{{ cardNumber }}</div>
+        <div v-if="status === 'success'" class="card-status" :class="status">
+          <IconOk :size="40"/>
+        </div>
+        <div v-if="status === 'fail'" class="card-status" :class="status">
+          <IconNotOk :size="40"/>
+        </div>
+        <div class="card-content">
+          <div class="main-text">{{ translation }}</div>
+        </div>
+        <div v-if="status === 'pending'" class="bottom-text">
+          <ButtonsStatuses
+              @right-answer="() => {emit('right-answer')}"
+              @wrong-answer="() => {emit('wrong-answer')}"
+          />
+        </div>
+        <div v-if="status !== 'pending'" class="bottom-text">завершено</div>
       </div>
-      <div
-          v-else-if="status === 'pending'"
-          class="bottom-text" @click="rotate()"
-      >перевернуть
-      </div>
-      <div v-if="status !== 'pending'" class="bottom-text">завершено</div>
     </div>
   </div>
 </template>
@@ -71,10 +78,6 @@ function rotate() {
   flex-direction: column;
   padding: 20px;
   perspective: 1000px;
-}
-
-.card.flipped .card-inner {
-  transform: rotateY(180deg);
 }
 
 .card-inner {
@@ -142,15 +145,28 @@ function rotate() {
   cursor: pointer;
 }
 
+
+.card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.card-front {
+  z-index: 2;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+}
+
 .card.flipped .card-inner {
   transform: rotateY(180deg);
 }
 
-.card.flipped .card-number,
-.card.flipped .card-status,
-.card.flipped .main-text,
-.card.flipped .bottom-text {
-  transform: rotateY(180deg);
-}
 
 </style>
