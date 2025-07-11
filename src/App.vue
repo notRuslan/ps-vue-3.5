@@ -20,6 +20,7 @@ let data = ref([]);
 
 
 async function getCards() {
+  score.value = 0;
   // eslint-disable-next-line no-undef
   const res = await fetch(`${API_ENDPOINT}/random-words`);
   if (res.status != 200) {
@@ -68,7 +69,7 @@ function wrongAnswer(index) {
     </nav>
   </header>
   <main class="main container">
-    <Button buttonText='Начать игру' @click="getCards"/>
+    <Button button-text='Начать игру' @start-game="getCards"/>
     <div class="card-list">
       <Card
           v-for="(card, index) in data"
