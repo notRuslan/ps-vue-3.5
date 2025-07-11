@@ -21,6 +21,7 @@ let data = ref([]);
 
 async function getCards() {
   score.value = 0;
+  data.value = [];
   // eslint-disable-next-line no-undef
   const res = await fetch(`${API_ENDPOINT}/random-words`);
   if (res.status != 200) {
