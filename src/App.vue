@@ -3,22 +3,16 @@ import Button from "./components/Button.vue";
 import ScoreDisplay from "./components/ScoreDisplay.vue";
 import HeardIcon from "./icons/HeardIcon.vue";
 import Card from "./components/Card.vue";
-import {onMounted, ref} from "vue";
+import {computed, ref} from "vue";
 
 const API_ENDPOINT = 'http://localhost:8080/api';
 
-
 let score = ref(0);
-/*let card = ref({
-  word: 'pollination',
-  translation: 'опыление',
-  state: 'closed',
-  status: 'pending',
-});*/
 
 let data = ref([]);
-let buttonText = ref('Начать игру');
-
+let buttonText = computed(() => {
+  return data.value.length ? 'Начать заново' : 'Начать игру';
+});
 
 async function getCards() {
   score.value = 0;
@@ -37,14 +31,7 @@ async function getCards() {
   }));
 
   data.value = tempData;
-  buttonText.value = 'Начать заново';
 }
-
-onMounted(() => {
-  // getCards();
-});
-
-let isStartedGame = false;
 
 function flipCard(index) {
   data.value[index].state = 'opened';
