@@ -17,6 +17,7 @@ let score = ref(0);
 });*/
 
 let data = ref([]);
+let buttonText = ref('Начать игру');
 
 
 async function getCards() {
@@ -36,10 +37,11 @@ async function getCards() {
   }));
 
   data.value = tempData;
+  buttonText.value = 'Начать заново';
 }
 
 onMounted(() => {
-  getCards();
+  // getCards();
 });
 
 let isStartedGame = false;
@@ -70,7 +72,10 @@ function wrongAnswer(index) {
     </nav>
   </header>
   <main class="main container">
-    <Button button-text='Начать игру' @start-game="getCards"/>
+    <Button
+        :button-text="buttonText"
+        @start-game="getCards"
+    />
     <div class="card-list">
       <Card
           v-for="(card, index) in data"
