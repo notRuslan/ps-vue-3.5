@@ -3,50 +3,50 @@ import Button from "./components/Button.vue";
 import ScoreDisplay from "./components/ScoreDisplay.vue";
 import HeardIcon from "./icons/HeardIcon.vue";
 import Card from "./components/Card.vue";
-import {computed, onMounted, ref} from "vue";
+import {computed, ref} from "vue";
 
 const API_ENDPOINT = 'http://localhost:8080/api';
-const btnStyle = 'button';
-
 
 let score = ref(0);
-/*let card = ref({
-  word: 'pollination',
-  translation: 'опыление',
-  state: 'closed',
-  status: 'pending',
-});*/
 
 let data = ref([]);
-
+let buttonText = computed(() => {
+  return data.value.length ? 'Начать заново' : 'Начать игру';
+});
 
 async function getCards() {
+  score.value = 0;
+  data.value = [];
   // eslint-disable-next-line no-undef
   const res = await fetch(`${API_ENDPOINT}/random-words`);
   if (res.status != 200) {
     console.error('Error fetching data');
   }
   data.value = await res.json();
-}
 
-let dataModified = computed(() => {
-  if (!data.value) {
-    return [];
-  }
-  return data.value?.map((item) => ({
+  const tempData = data.value?.map((item) => ({
     ...item,
     state: 'closed',
     status: 'pending',
-  })) || []; // возвращаем пустой массив при отсутствии данных
-});
+  }));
 
-onMounted(() => {
-  getCards();
-});
+  data.value = tempData;
+}
 
-let isStartedGame = false;
+function flipCard(index) {
+  data.value[index].state = 'opened';
+}
 
-// card.value.word = 'HHH';
+function successAnswer(index) {
+  data.value[index].status = 'success';
+  score.value += 10;
+}
+
+function wrongAnswer(index) {
+  data.value[index].status = 'fail';
+  score.value -= 4;
+}
+
 </script>
 
 <template>
@@ -59,14 +59,21 @@ let isStartedGame = false;
     </nav>
   </header>
   <main class="main container">
-    <Button buttonText='Начать игру' @click="getCards"/>
+    <Button
+        :button-text="buttonText"
+        @start-game="getCards"
+    />
     <div class="card-list">
       <Card
-          v-for="(card, index) in dataModified"
+          v-for="(card, index) in data"
           v-bind="card"
           :key="`${card.word} + ${index}`"
           :card-number="index + 1"
-      />
+          @card-rotate="flipCard(index)"
+          @right-answer="successAnswer(index)"
+          @wrong-answer="wrongAnswer(index)"
+      >
+      </Card>
     </div>
   </main>
 </template>
